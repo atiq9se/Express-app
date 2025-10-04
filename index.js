@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const {string, number, object, array} = require('yup');
+const { userSchema } = require('./userSchema');
 
 app.use(express.json())
 
@@ -16,22 +16,6 @@ const users =[
     }
 ]
 
-const validateUser = (user)=>{
-     const userSchema = object().shape({
-        first_name: string()
-            .min(3, 'this field must be at first least 3 characters.')
-            .max(50, 'this field must be at most 50 characters.')
-            .required('this field must not be empty.'),
-        last_name: string()
-            .min(3, 'this field must be at least 3 characters.')
-            .max(50, 'this field must be at most 50 characters.')
-            .required('this field must not be empty.')
-     })
-
-     return userSchema.validate(user)
-}
-
-
 app.get("/api/users", function(req, res){
     res.send(users)
 })
@@ -42,23 +26,52 @@ app.post("/api/users", async function(req, res){
         last_name
     } = req.body;
 
-   try{
-      const response = await validateUser({first_name, last_name});
-      console.log(response);
-   }
-   catch(err){
-     console.log(err);
-     return res.status(400).send(err.errors[0]);
-   }
+    userSchema.validate({first_name, last_name})
+        .then(function(result){
+            const user ={
+                id: users.length + 1,
+                first_name,
+                last_name
+            }
+            users.push(user);
 
-    const user ={
-        id: users.length + 1,
-        first_name,
-        last_name
-    }
-    users.push(user);
+            res.status(201).send(user);
+        })
+        .catch(function(err){
+            return res.status(400).send(err.errors[0]);
+        })
 
-    res.status(201).send(user);
+        validUser(sender)
+            .then(function(){
+                enoughMoney(sender)
+                    .then(function(){
+                        validUser(receiver)
+                            .then(function(){
+                                useReducer(sender)
+                                    .then(function (){
+                                        increase(receiver, certainAmount)
+                                            .then(function(){
+                                                res.status(200).send('Perfectly sent money done.')
+                                            })
+                                            .catch(function (){
+
+                                            })
+                                    })
+                                    .catch(function(){
+
+                                    })
+                            })
+                            .catch(function(){
+
+                            })
+                    })
+                    .catch(function(){
+
+                    })
+            })
+            .catch(function(){
+                
+            })
 })
 
 app.get("/api/users/:id", function(req, res){
@@ -113,3 +126,8 @@ app.delete("/api/users/:id", function(req, res){
 app.listen(3000, ()=>{
     console.log("listening on the port 3000")
 })
+
+
+/*
+    Promise, callback hell, async...await(es6 feature)
+*/
