@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
+    "sequelize": "^6.37.7",
     "yup": "^1.7.1"
   }
 }
