@@ -1,30 +1,37 @@
 const { validateUserRegistration } = require("../util/user.validate");
+const {User} = require('../models/dbmodel')
 
-const users = [];
 
-async function registerUser (req, res){
+async function postUser (req, res){
     const { username, email, phone, password, confirm_password} = req.body;
 
     try{
         const err = await validateUserRegistration({ username, email, phone, password, confirm_password })
 
-        if(err) return res.status(400).send(err)
-
-            const user = {
-                id: user.length,
-                username,
-                email,
-                phone,
-                password
+        if(err) return res.status(400).send(err);
+        
+        const existUser = await User.findOne({
+            where: {
+                email
             }
+        });
 
-            users.push(user);
+        if(existUser) return res.status(400).send("Already registered with the email");
 
-            res.status(201).send(user)
+        const user = await User.create({
+            username,
+            email,
+            password 
+        })
+
+        res.status(201).send(user)
     }
-    catch(err){
-        err.status(500).send('Internal serve error')
-    }
+    catch (err) {
+    console.error(err);
+    res.status(err.status || 500).json({
+      message: err.message || "Internal server error",
+    });
+  }
 }
 
-module.exports.registerUser = registerUser
+module.exports = {postUser}

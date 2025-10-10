@@ -1,4 +1,4 @@
-const { registerSchema} = require('../schema/user.schema')
+const  registerSchema = require('../schema/user.schema')
 
 const validateUserRegistration = async user => {
     try{
