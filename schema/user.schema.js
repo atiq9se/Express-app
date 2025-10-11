@@ -7,7 +7,7 @@ function isEmailLengthValid(email){
     return local.length <= 64;
 }
 
-const registerSchema = object().shape({
+const userRegisterSchema = object().shape({
         username: string()
             .min(3, 'Username must be at first least 3 characters long.')
             .max(50, 'Username must be at most 50 characters long.')
@@ -30,4 +30,18 @@ const registerSchema = object().shape({
         .oneOf([ref('password'), null], 'Passwords must match')
      })
 
-module.exports = registerSchema;
+const userUpdateSchema = object().shape({
+        username: string()
+            .min(3, 'Username must be at first least 3 characters long.')
+            .max(50, 'Username must be at most 50 characters long.'),
+        
+        email: string()
+            .email('This field should be a valid email address.')
+            .max(100, 'This field must be at most 50 characters long')
+            .test('is-valid-email-length', 'The part before @ of the email can be maximum 64 characters.', 
+                email => isEmailLengthValid(email))
+ 
+     })
+
+module.exports.userRegisterSchema = userRegisterSchema;
+module.exports.userUpdateSchema   = userUpdateSchema;
