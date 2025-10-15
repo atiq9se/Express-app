@@ -34,12 +34,12 @@ const singleUser = async(req, res)=>{
 }
 
 const createUser = async (req, res)=>{
-    const { username, email, phone, password, confirm_password} = req.body;
+    const { username, email, password, confirm_password} = req.body;
 
     try{
-        const err = await validateUserRegistration({ username, email, phone, password, confirm_password })
+        // const err = await validateUserRegistration({ username, email, phone, password, confirm_password })
 
-        if(err) return res.status(400).send(err);
+        // if(err) return res.status(400).send(err);
         
         const existUser = await User.findOne({
             where: {

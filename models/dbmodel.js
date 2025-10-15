@@ -9,21 +9,4 @@ const sequelize = new Sequelize('inital_test_db', "root", '',  {
      sync: true
 });
 
-const User = sequelize.define("users", {
-   username: {
-      type: Sequelize.STRING,
-      allowNull: false
-   },
-   email: {
-      type: Sequelize.STRING,
-      allowNull: false
-   },
-   password: {
-      type: Sequelize.STRING,
-      allowNull: false
-   },
-   // created_at : {type: Sequelize.DATE },
-   // updated_at : {type: Sequelize.DATE },
-});
-
-module.exports = User;
+module.exports = sequelize ;

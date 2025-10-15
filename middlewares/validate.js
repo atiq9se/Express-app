@@ -1,4 +1,7 @@
- function validate(schema){
+
+
+
+function validate(schema){
     return async function(req, res, next){
         try{
             await schema.validate(req.body, { abortEarly: false });
