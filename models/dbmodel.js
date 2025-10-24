@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize('inital_test_db', "root", '',  {
      logging: console.log,
@@ -9,4 +9,4 @@ const sequelize = new Sequelize('inital_test_db', "root", '',  {
      sync: true
 });
 
-module.exports = sequelize ;
+module.exports = sequelize;

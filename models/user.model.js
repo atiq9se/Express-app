@@ -1,8 +1,8 @@
+const sequelize = require("./dbmodel"); 
+const UserType = require('./user-type.model')
 const { DataTypes } = require("sequelize");
 
-const sequelize = ("./dbmodel.js");
-
-const User = sequelize.define("users", {
+const User = sequelize.define('users', {
    first_name: {
       type: DataTypes.STRING(255),
       allowNull: false
@@ -13,7 +13,7 @@ const User = sequelize.define("users", {
    },
    username: {
       type: DataTypes.STRING(255),
-      allowNull: false
+        allowNull: false
    },
    email: {
       type: DataTypes.STRING,
@@ -29,8 +29,11 @@ const User = sequelize.define("users", {
    },
    is_active: {
       type: DataTypes.ENUM,
-      values:[0,1]
+      values:[ 0, 1 ]
    }
 });
 
-exports.modules = User;
+UserType.hasMany(User, { as: 'users', foreignKey: 'user_type_id' } );
+User.belongsTo(UserType, { as: 'user_type ', foreignKey: 'user_type_id' } )
+
+module.exports = User;

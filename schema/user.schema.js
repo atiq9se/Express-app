@@ -8,6 +8,15 @@ function isEmailLengthValid(email){
 }
 
 const userRegisterSchema = object().shape({
+        first_name: string()
+            .min(3, 'Username must be at first least 3 characters long.')
+            .max(50, 'Username must be at most 50 characters long.')
+            .required('Username is required.'),
+        last_name: string()
+            .min(3, 'Username must be at first least 3 characters long.')
+            .max(50, 'Username must be at most 50 characters long.')
+            .required('Username is required.'),
+
         username: string()
             .min(3, 'Username must be at first least 3 characters long.')
             .max(50, 'Username must be at most 50 characters long.')
@@ -26,11 +35,17 @@ const userRegisterSchema = object().shape({
             .required('This field must not be empty'),
 
         confirm_password: string()
-        .required('This field must not be empty')
-        .oneOf([ref('password'), null], 'Passwords must match')
+            .required('This field must not be empty')
+            .oneOf([ref('password'), null], 'Passwords must match')
      })
 
 const userUpdateSchema = object().shape({
+        first_name: string()
+            .min(3, 'Username must be at first least 3 characters long.')
+            .max(50, 'Username must be at most 50 characters long.'),
+        last_name: string()
+            .min(3, 'Username must be at first least 3 characters long.')
+            .max(50, 'Username must be at most 50 characters long.'),
         username: string()
             .min(3, 'Username must be at first least 3 characters long.')
             .max(50, 'Username must be at most 50 characters long.'),

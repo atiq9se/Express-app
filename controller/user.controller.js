@@ -1,10 +1,16 @@
 const { validateUserRegistration, validateUserUpdate } = require("../util/user.validate");
-const User = require('../models/dbmodel');
+const User = require('../models/user.model');
+const UserType = require('../models/user-type.model');
 
 
 const allUsers = async(req, res)=>{
     try{
-        const users = await User.findAll();
+        const users = await User.findAll({
+            include: [{
+                model: UserType,
+                as: 'user_type'
+            }]
+        });
         res.status(200).send(users);
     }
     catch(err){
@@ -34,12 +40,14 @@ const singleUser = async(req, res)=>{
 }
 
 const createUser = async (req, res)=>{
-    const { username, email, password, confirm_password} = req.body;
+    
 
     try{
         // const err = await validateUserRegistration({ username, email, phone, password, confirm_password })
 
         // if(err) return res.status(400).send(err);
+
+        const { first_name, last_name, username, email, password, user_type_id} = req.body;
         
         const existUser = await User.findOne({
             where: {
@@ -50,9 +58,12 @@ const createUser = async (req, res)=>{
         if(existUser) return res.status(400).send("Already registered with the email");
 
         const user = await User.create({
+            first_name, 
+            last_name,
             username,
             email,
-            password 
+            password,
+            user_type_id
         })
 
         res.status(201).send(user)
