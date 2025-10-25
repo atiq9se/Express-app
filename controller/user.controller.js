@@ -41,7 +41,6 @@ const singleUser = async(req, res)=>{
 
 const createUser = async (req, res)=>{
     
-
     try{
         // const err = await validateUserRegistration({ username, email, phone, password, confirm_password })
 
@@ -100,10 +99,11 @@ const putUser = async (req, res) => {
 
 const patchUser = async (req, res)=>{
     const { id } = req.params;
-    const {username, email} = req.body;
+    const { firstName, lastName, username, email} = req.body;
 
     try{
         const user = await User.findOne({where: {id}});
+        
         if(!user) return res.status(404).send("user not found");
         const err = await validateUserUpdate({username, email})
         if(err) return res.status(400).send(err);

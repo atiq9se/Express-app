@@ -1,15 +1,5 @@
-const promise1 = new Promise(function (resolve, reject){
-    setTimeout(function(){
-        resolve("hollo")
-    }, 5000)
-})
+module.exports.start = async function () {
 
-promise1
-    .then(function(result){
-        console.log(result);
-    })
-    .catch(function(err){
-        console.log(err);
-    })
-
-console.log("at first print")
+    const app = await require("./express")();
+    app.listen(5000, ()=> console.log("Listening on port 5000"))
+}

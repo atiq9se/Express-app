@@ -1,6 +1,6 @@
+const { DataTypes } = require("sequelize");
 const sequelize = require("./dbmodel"); 
 const UserType = require('./user-type.model')
-const { DataTypes } = require("sequelize");
 
 const User = sequelize.define('users', {
    first_name: {
