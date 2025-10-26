@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 const UserType = require('../models/user-type.model');
 
 
-const allUsers = async(req, res)=>{
+const getUsers = async(req, res)=>{
     try{
         const users = await User.findAll({
             include: [{
@@ -22,7 +22,7 @@ const allUsers = async(req, res)=>{
     }
 }
 
-const singleUser = async(req, res)=>{
+const getUser = async(req, res)=>{
     try{
         const {id }= req.params;
         const user = await User.findOne({
@@ -141,8 +141,8 @@ const deleteUser = async(req, res)=>{
 }
 
 module.exports.createUser = createUser;
-module.exports.allUsers = allUsers;
-module.exports.singleUser = singleUser;
+module.exports.getUsers = getUsers;
+module.exports.getUser = getUser;
 module.exports.putUser = putUser;
 module.exports.patchUser = patchUser;
 module.exports.deleteUser = deleteUser;

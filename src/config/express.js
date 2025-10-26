@@ -1,5 +1,5 @@
 
-const users = require('./routes/user.routes')
+const users = require('../../routes/user.routes')
 const express = require('express');
 
 module.exports = async function(){
@@ -15,8 +15,3 @@ module.exports = async function(){
 
     return app;
 }
-
-app.listen(3000, ()=>{
-    console.log("listening on the port 3000")
-})
- 
