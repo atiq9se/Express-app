@@ -1,3 +1,5 @@
+const path = require("path");
+const users = require(path.join(process.cwd(), "src/modules/user/user.routes.js"));
 
 const users = require('../../routes/user.routes')
 const express = require('express');
