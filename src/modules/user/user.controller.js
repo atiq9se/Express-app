@@ -1,6 +1,5 @@
-const { validateUserRegistration, validateUserUpdate } = require("../util/user.validate");
-const User = require('../models/user.model');
-const UserType = require('../models/user-type.model');
+const User = require('./user.model');
+const UserType = require('./user-type.model');
 
 
 const getUsers = async(req, res)=>{
@@ -8,7 +7,7 @@ const getUsers = async(req, res)=>{
         const users = await User.findAll({
             include: [{
                 model: UserType,
-                as: 'user_type'
+                as: 'user_types'
             }]
         });
         res.status(200).send(users);
